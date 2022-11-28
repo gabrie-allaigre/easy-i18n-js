@@ -86,7 +86,7 @@ tr('welcome') // Hello world
 | args      | `string[]`                                         | `['Gabriel', '20']`                |
 | namedArgs | `{ [key: string]: string; } }`                     | `{ name : 'Gabriel', age : '20' }` |
 | namespace | `string`                                           | `'common'`                         |
-| gender    | <code>'male' &#124; 'female' &#124; 'other'</code> | `gender: 'other'` |
+| gender    | <code>'male' &#124; 'female' &#124; 'other'</code> | `gender: 'other'`                  |
 
 #### Examples
 
@@ -155,13 +155,14 @@ You can use extension methods of [String], you can also use plural() as a static
 
 #### Arguments
 
-| Name              | type                           | example                            |
-|-------------------|--------------------------------|------------------------------------|
-| args              | `string[]`                     | `['Gabriel', '20']`                |
-| namedArgs         | `{ [key: string]: string; } }` | `{ name : 'Gabriel', age : '20' }` |
-| namespace         | `string`                       | `'common'`                         |
-| name              | `string`                       | `money`                            |
-| numberFormatterFn | `(value: number) => string`    | `(value) => value.Precision(3)`    |
+| Name              | type                                               | example                            |
+|-------------------|----------------------------------------------------|------------------------------------|
+| args              | `string[]`                                         | `['Gabriel', '20']`                |
+| namedArgs         | `{ [key: string]: string; } }`                     | `{ name : 'Gabriel', age : '20' }` |
+| namespace         | `string`                                           | `'common'`                         |
+| name              | `string`                                           | `money`                            |
+| numberFormatterFn | `(value: number) => string`                        | `(value) => value.Precision(3)`    |
+| gender            | <code>'male' &#124; 'female' &#124; 'other'</code> | `gender: 'other'`                  |
 
 ```typescript
 installEasyI18n();
@@ -200,6 +201,28 @@ setEasyI18nMessages({
 ```typescript
 'money_named_args'.plural(1, { namedArgs: { name: 'Gabriel' }, name: 'money' }) // Gabriel has 1 dollar
 'money_named_args'.plural(1.5, { namedArgs: { name: 'Gabriel' }, name: 'money' }) // Gabriel has 1.5 dollars
+```
+
+#### Gender
+
+```typescript
+installEasyI18n();
+
+setEasyI18nMessages({
+  'money': {
+    'zero': { male: 'He not have money', female: 'She not have money', other: 'You not have money' },
+    'one': { male: 'He have {} dollar', female: 'She have {} dollar', other: 'You have {} dollar' },
+    'two': 'You have few {} dollars',
+    'other': { male: 'He have other {} dollars', female: 'She have other {} dollars', other: 'You have other {} dollars' },
+  }
+});
+```
+
+```typescript
+'money'.plural(0, { gender: 'female' }) // She not have money
+'money'.plural(1, { gender: 'other' }) // You have 1 dollar
+'money'.plural(2, { gender: 'male' }) // You have few 2 dollars
+'money'.plural(1.5, { gender: 'male' }) // He have other 1.5 dollars
 ```
 
 #### Formatter
