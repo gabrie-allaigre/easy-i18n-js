@@ -8,12 +8,17 @@ test('Simple message', function () {
   setEasyI18nMessages({
     'welcome': 'Hello world',
     'Complexe Key': 'Key is complexe',
+    'common': {
+      'yes': 'Yes'
+    }
   });
 
   expect('welcome'.tr()).toEqual('Hello world');
   expect(tr('welcome')).toEqual('Hello world');
   expect('Hello world'.tr()).toEqual('Hello world');
   expect('Complexe Key'.tr()).toEqual('Key is complexe');
+  expect('common'.tr()).toEqual('common');
+  expect('common.yes'.tr()).toEqual('Yes');
 });
 
 test('Gender message', function () {
@@ -24,13 +29,22 @@ test('Gender message', function () {
       'male': 'Hi, boy',
       'female': 'Hello girl',
       'other': 'Welcome'
-    }
+    },
+    'welcome_male': {
+      'male': 'Hi, boy',
+      'other': 'Welcome'
+    },
+    'hello': 'Hello'
   });
 
   expect('welcome'.tr()).toEqual('welcome');
   expect('welcome'.tr({ gender: 'male' })).toEqual('Hi, boy');
   expect('welcome'.tr({ gender: 'female' })).toEqual('Hello girl');
   expect('welcome'.tr({ gender: 'other' })).toEqual('Welcome');
+  expect('hello'.tr({ gender: 'male' })).toEqual('Hello');
+  expect('welcome_male'.tr({ gender: 'male' })).toEqual('Hi, boy');
+  expect('welcome_male'.tr({ gender: 'female' })).toEqual('welcome_male');
+  expect('welcome_male'.tr({ gender: 'other' })).toEqual('Welcome');
 });
 
 test('Args message', function () {
@@ -108,6 +122,7 @@ test('Link and modifiers message', function () {
     'love4': 'Have you love {}? @.upper:common.yes!!',
     'notfound': 'Have you love {}? @:common.nothing',
     'notfound2': 'Have you love {}? @.neant:common.yes',
+    'notfound3': 'Have you love {}? @:common',
   });
 
   expect('love'.tr()).toEqual('I love link Yes or No');
@@ -116,6 +131,7 @@ test('Link and modifiers message', function () {
   expect('love4'.tr({ args: ['Gabriel'] })).toEqual('Have you love Gabriel? YES!!');
   expect('notfound'.tr({ args: ['Gabriel'] })).toEqual('Have you love Gabriel? common.nothing');
   expect('notfound2'.tr({ args: ['Gabriel'] })).toEqual('Have you love Gabriel? Yes');
+  expect('notfound3'.tr({ args: ['Gabriel'] })).toEqual('Have you love Gabriel? @:common');
 });
 
 test('Namespace message', function () {

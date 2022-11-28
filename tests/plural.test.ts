@@ -18,8 +18,33 @@ test('Simple message', function () {
   expect('money'.plural(0)).toEqual('You not have money');
   expect('money'.plural(1)).toEqual('You have 1 dollar');
   expect('money'.plural(1.5)).toEqual('You have other 1.5 dollars');
+  expect('money'.plural(2)).toEqual('You have other 2 dollars');
   expect('money'.plural(10)).toEqual('You have other 10 dollars');
   expect(plural('money', 0)).toEqual('You not have money');
+});
+
+test('Simple gender message', function () {
+  installEasyI18n();
+
+  setEasyI18nMessages({
+    'welcome': 'Hello world',
+    'money': {
+      'zero': { male: 'He not have money', female: 'She not have money', other: 'You not have money' },
+      'one': { male: 'He have {} dollar', female: 'She have {} dollar', other: 'You have {} dollar' },
+      'two': 'You have few {} dollars',
+      'other': { male: 'He have other {} dollars', female: 'She have other {} dollars', other: 'You have other {} dollars' },
+    }
+  });
+
+  expect('welcome'.plural(0, {gender: 'male'})).toEqual('welcome');
+  expect('money'.plural(0, {gender: 'female'})).toEqual('She not have money');
+  expect('money'.plural(1, {gender: 'other'})).toEqual('You have 1 dollar');
+  expect('money'.plural(2, {gender: 'male'})).toEqual('You have few 2 dollars');
+  expect('money'.plural(1.5, {gender: 'male'})).toEqual('He have other 1.5 dollars');
+  expect('money'.plural(2, {gender: 'female'})).toEqual('You have few 2 dollars');
+  expect('money'.plural(10, {gender: 'male'})).toEqual('He have other 10 dollars');
+  expect('money'.plural(10)).toEqual('money');
+  expect(plural('money', 0, {gender: 'female'})).toEqual('She not have money');
 });
 
 test('Formatter message', function () {
