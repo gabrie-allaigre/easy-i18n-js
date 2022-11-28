@@ -1,4 +1,7 @@
 import { PluralCase } from './easy-i18n';
+import lodash from 'lodash';
+
+export const cultureRegex = new RegExp('^([a-z]{2,3})(?:-([A-Z]{2,3})(?:-([a-zA-Z]{4}))?)?$');
 
 export function getPluralRules(local: string, howMany: number): PluralCase {
   return new PluralRules(howMany).getPluralCase(local);
@@ -55,7 +58,7 @@ class PluralRules {
     this.t = f;
   }
 
-  private fil_rule(): PluralCase {
+  private filRule(): PluralCase {
     if (this.v == 0 && (this.i == 1 || this.i == 2 || this.i == 3) ||
       this.v == 0 && this.i % 10 != 4 && this.i % 10 != 6 && this.i % 10 != 9 ||
       this.v != 0 && this.f % 10 != 4 && this.f % 10 != 6 && this.f % 10 != 9) {
@@ -64,14 +67,14 @@ class PluralRules {
     return 'other';
   }
 
-  private pt_PT_rule(): PluralCase {
+  private ptPTRule(): PluralCase {
     if (this.n == 1 && this.v == 0) {
       return 'one';
     }
     return 'other';
   }
 
-  private br_rule(): PluralCase {
+  private brRule(): PluralCase {
     if (this.n % 10 == 1 && this.n % 100 != 11 && this.n % 100 != 71 && this.n % 100 != 91) {
       return 'one';
     }
@@ -90,7 +93,7 @@ class PluralRules {
     return 'other';
   }
 
-  private sr_rule(): PluralCase {
+  private srRule(): PluralCase {
     if (this.v == 0 && this.i % 10 == 1 && this.i % 100 != 11 ||
       this.f % 10 == 1 && this.f % 100 != 11) {
       return 'one';
@@ -105,7 +108,7 @@ class PluralRules {
     return 'other';
   }
 
-  private ro_rule(): PluralCase {
+  private roRule(): PluralCase {
     if (this.i == 1 && this.v == 0) {
       return 'one';
     }
@@ -115,21 +118,21 @@ class PluralRules {
     return 'other';
   }
 
-  private hi_rule(): PluralCase {
+  private hiRule(): PluralCase {
     if (this.i == 0 || this.n == 1) {
       return 'one';
     }
     return 'other';
   }
 
-  private fr_rule(): PluralCase {
+  private frRule(): PluralCase {
     if (this.i == 0 || this.i == 1) {
       return 'one';
     }
     return 'other';
   }
 
-  private cs_rule(): PluralCase {
+  private csRule(): PluralCase {
     if (this.i == 1 && this.v == 0) {
       return 'one';
     }
@@ -142,7 +145,7 @@ class PluralRules {
     return 'other';
   }
 
-  private pl_rule(): PluralCase {
+  private plRule(): PluralCase {
     if (this.i == 1 && this.v == 0) {
       return 'one';
     }
@@ -160,7 +163,7 @@ class PluralRules {
     return 'other';
   }
 
-  private lv_rule(): PluralCase {
+  private lvRule(): PluralCase {
     if (this.n % 10 == 0 ||
       this.n % 100 >= 11 && this.n % 100 <= 19 ||
       this.v == 2 && this.f % 100 >= 11 && this.f % 100 <= 19) {
@@ -174,7 +177,7 @@ class PluralRules {
     return 'other';
   }
 
-  private he_rule(): PluralCase {
+  private heRule(): PluralCase {
     if (this.i == 1 && this.v == 0) {
       return 'one';
     }
@@ -187,7 +190,7 @@ class PluralRules {
     return 'other';
   }
 
-  private mt_rule(): PluralCase {
+  private mtRule(): PluralCase {
     if (this.n == 1) {
       return 'one';
     }
@@ -200,14 +203,14 @@ class PluralRules {
     return 'other';
   }
 
-  private si_rule(): PluralCase {
+  private siRule(): PluralCase {
     if ((this.n == 0 || this.n == 1) || this.i == 0 && this.f == 1) {
       return 'one';
     }
     return 'other';
   }
 
-  private cy_rule(): PluralCase {
+  private cyRule(): PluralCase {
     if (this.n == 0) {
       return 'zero';
     }
@@ -226,14 +229,14 @@ class PluralRules {
     return 'other';
   }
 
-  private da_rule(): PluralCase {
+  private daRule(): PluralCase {
     if (this.n == 1 || this.t != 0 && (this.i == 0 || this.i == 1)) {
       return 'one';
     }
     return 'other';
   }
 
-  private ru_rule(): PluralCase {
+  private ruRule(): PluralCase {
     if (this.v == 0 && this.i % 10 == 1 && this.i % 100 != 11) {
       return 'one';
     }
@@ -251,7 +254,7 @@ class PluralRules {
     return 'other';
   }
 
-  private be_rule(): PluralCase {
+  private beRule(): PluralCase {
     if (this.n % 10 == 1 && this.n % 100 != 11) {
       return 'one';
     }
@@ -266,14 +269,14 @@ class PluralRules {
     return 'other';
   }
 
-  private mk_rule(): PluralCase {
+  private mkRule(): PluralCase {
     if (this.v == 0 && this.i % 10 == 1 || this.f % 10 == 1) {
       return 'one';
     }
     return 'other';
   }
 
-  private ga_rule(): PluralCase {
+  private gaRule(): PluralCase {
     if (this.n == 1) {
       return 'one';
     }
@@ -289,28 +292,28 @@ class PluralRules {
     return 'other';
   }
 
-  private pt_rule(): PluralCase {
+  private ptRule(): PluralCase {
     if (this.n >= 0 && this.n <= 2 && this.n != 2) {
       return 'one';
     }
     return 'other';
   }
 
-  private es_rule(): PluralCase {
+  private esRule(): PluralCase {
     if (this.n == 1) {
       return 'one';
     }
     return 'other';
   }
 
-  private is_rule(): PluralCase {
+  private isRule(): PluralCase {
     if (this.t == 0 && this.i % 10 == 1 && this.i % 100 != 11 || this.t != 0) {
       return 'one';
     }
     return 'other';
   }
 
-  private ar_rule(): PluralCase {
+  private arRule(): PluralCase {
     if (this.n == 0) {
       return 'zero';
     }
@@ -329,7 +332,7 @@ class PluralRules {
     return 'other';
   }
 
-  private sl_rule(): PluralCase {
+  private slRule(): PluralCase {
     if (this.v == 0 && this.i % 100 == 1) {
       return 'one';
     }
@@ -342,7 +345,7 @@ class PluralRules {
     return 'other';
   }
 
-  private lt_rule(): PluralCase {
+  private ltRule(): PluralCase {
     if (this.n % 10 == 1 && (this.n % 100 < 11 || this.n % 100 > 19)) {
       return 'one';
     }
@@ -355,139 +358,144 @@ class PluralRules {
     return 'other';
   }
 
-  private en_rule(): PluralCase {
+  private enRule(): PluralCase {
     if (this.i == 1 && this.v == 0) {
       return 'one';
     }
     return 'other';
   }
 
-  private ak_rule(): PluralCase {
+  private akRule(): PluralCase {
     if (this.n >= 0 && this.n <= 1) {
       return 'one';
     }
     return 'other';
   }
 
-  private default_rule(): PluralCase {
+  private defaultRule(): PluralCase {
     return 'other';
   }
 
   private readonly pluralRules: { [key: string]: () => PluralCase; } = {
-    'af': this.es_rule,
-    'am': this.hi_rule,
-    'ar': this.ar_rule,
-    'az': this.es_rule,
-    'be': this.be_rule,
-    'bg': this.es_rule,
-    'bn': this.hi_rule,
-    'br': this.br_rule,
-    'bs': this.sr_rule,
-    'ca': this.en_rule,
-    'chr': this.es_rule,
-    'cs': this.cs_rule,
-    'cy': this.cy_rule,
-    'da': this.da_rule,
-    'de': this.en_rule,
-    'de_AT': this.en_rule,
-    'de_CH': this.en_rule,
-    'el': this.es_rule,
-    'en': this.en_rule,
-    'en_AU': this.en_rule,
-    'en_CA': this.en_rule,
-    'en_GB': this.en_rule,
-    'en_IE': this.en_rule,
-    'en_IN': this.en_rule,
-    'en_SG': this.en_rule,
-    'en_US': this.en_rule,
-    'en_ZA': this.en_rule,
-    'es': this.es_rule,
-    'es_419': this.es_rule,
-    'es_ES': this.es_rule,
-    'es_MX': this.es_rule,
-    'es_US': this.es_rule,
-    'et': this.en_rule,
-    'eu': this.es_rule,
-    'fa': this.hi_rule,
-    'fi': this.en_rule,
-    'fil': this.fil_rule,
-    'fr': this.fr_rule,
-    'fr_CA': this.fr_rule,
-    'ga': this.ga_rule,
-    'gl': this.en_rule,
-    'gsw': this.es_rule,
-    'gu': this.hi_rule,
-    'haw': this.es_rule,
-    'he': this.he_rule,
-    'hi': this.hi_rule,
-    'hr': this.sr_rule,
-    'hu': this.es_rule,
-    'hy': this.fr_rule,
-    'id': this.default_rule,
-    'in': this.default_rule,
-    'is': this.is_rule,
-    'it': this.en_rule,
-    'iw': this.he_rule,
-    'ja': this.default_rule,
-    'ka': this.es_rule,
-    'kk': this.es_rule,
-    'km': this.default_rule,
-    'kn': this.hi_rule,
-    'ko': this.default_rule,
-    'ky': this.es_rule,
-    'ln': this.ak_rule,
-    'lo': this.default_rule,
-    'lt': this.lt_rule,
-    'lv': this.lv_rule,
-    'mk': this.mk_rule,
-    'ml': this.es_rule,
-    'mn': this.es_rule,
-    'mo': this.ro_rule,
-    'mr': this.hi_rule,
-    'ms': this.default_rule,
-    'mt': this.mt_rule,
-    'my': this.default_rule,
-    'nb': this.es_rule,
-    'ne': this.es_rule,
-    'nl': this.en_rule,
-    'no': this.es_rule,
-    'no_NO': this.es_rule,
-    'or': this.es_rule,
-    'pa': this.ak_rule,
-    'pl': this.pl_rule,
-    'pt': this.pt_rule,
-    'pt_BR': this.pt_rule,
-    'pt_PT': this.pt_PT_rule,
-    'ro': this.ro_rule,
-    'ru': this.ru_rule,
-    'sh': this.sr_rule,
-    'si': this.si_rule,
-    'sk': this.cs_rule,
-    'sl': this.sl_rule,
-    'sq': this.es_rule,
-    'sr': this.sr_rule,
-    'sr_Latn': this.sr_rule,
-    'sv': this.en_rule,
-    'sw': this.en_rule,
-    'ta': this.es_rule,
-    'te': this.es_rule,
-    'th': this.default_rule,
-    'tl': this.fil_rule,
-    'tr': this.es_rule,
-    'uk': this.ru_rule,
-    'ur': this.en_rule,
-    'uz': this.es_rule,
-    'vi': this.default_rule,
-    'zh': this.default_rule,
-    'zh_CN': this.default_rule,
-    'zh_HK': this.default_rule,
-    'zh_TW': this.default_rule,
-    'zu': this.hi_rule,
-    'default': this.default_rule
+    'af': this.esRule,
+    'am': this.hiRule,
+    'ar': this.arRule,
+    'az': this.esRule,
+    'be': this.beRule,
+    'bg': this.esRule,
+    'bn': this.hiRule,
+    'br': this.brRule,
+    'bs': this.srRule,
+    'ca': this.enRule,
+    'chr': this.esRule,
+    'cs': this.csRule,
+    'cy': this.cyRule,
+    'da': this.daRule,
+    'de': this.enRule,
+    'de-AT': this.enRule,
+    'de-CH': this.enRule,
+    'el': this.esRule,
+    'en': this.enRule,
+    'en-AU': this.enRule,
+    'en-CA': this.enRule,
+    'en-GB': this.enRule,
+    'en-IE': this.enRule,
+    'en-IN': this.enRule,
+    'en-SG': this.enRule,
+    'en-US': this.enRule,
+    'en-ZA': this.enRule,
+    'es': this.esRule,
+    'es-ES': this.esRule,
+    'es-MX': this.esRule,
+    'es-US': this.esRule,
+    'et': this.enRule,
+    'eu': this.esRule,
+    'fa': this.hiRule,
+    'fi': this.enRule,
+    'fil': this.filRule,
+    'fr': this.frRule,
+    'fr-CA': this.frRule,
+    'ga': this.gaRule,
+    'gl': this.enRule,
+    'gsw': this.esRule,
+    'gu': this.hiRule,
+    'haw': this.esRule,
+    'he': this.heRule,
+    'hi': this.hiRule,
+    'hr': this.srRule,
+    'hu': this.esRule,
+    'hy': this.frRule,
+    'id': this.defaultRule,
+    'in': this.defaultRule,
+    'is': this.isRule,
+    'it': this.enRule,
+    'iw': this.heRule,
+    'ja': this.defaultRule,
+    'ka': this.esRule,
+    'kk': this.esRule,
+    'km': this.defaultRule,
+    'kn': this.hiRule,
+    'ko': this.defaultRule,
+    'ky': this.esRule,
+    'ln': this.akRule,
+    'lo': this.defaultRule,
+    'lt': this.ltRule,
+    'lv': this.lvRule,
+    'mk': this.mkRule,
+    'ml': this.esRule,
+    'mn': this.esRule,
+    'mo': this.roRule,
+    'mr': this.hiRule,
+    'ms': this.defaultRule,
+    'mt': this.mtRule,
+    'my': this.defaultRule,
+    'nb': this.esRule,
+    'ne': this.esRule,
+    'nl': this.enRule,
+    'no': this.esRule,
+    'no-NO': this.esRule,
+    'or': this.esRule,
+    'pa': this.akRule,
+    'pl': this.plRule,
+    'pt': this.ptRule,
+    'pt-BR': this.ptRule,
+    'pt-PT': this.ptPTRule,
+    'ro': this.roRule,
+    'ru': this.ruRule,
+    'sh': this.srRule,
+    'si': this.siRule,
+    'sk': this.csRule,
+    'sl': this.slRule,
+    'sq': this.esRule,
+    'sr': this.srRule,
+    'sv': this.enRule,
+    'sw': this.enRule,
+    'ta': this.esRule,
+    'te': this.esRule,
+    'th': this.defaultRule,
+    'tl': this.filRule,
+    'tr': this.esRule,
+    'uk': this.ruRule,
+    'ur': this.enRule,
+    'uz': this.esRule,
+    'vi': this.defaultRule,
+    'zh': this.defaultRule,
+    'zh-CN': this.defaultRule,
+    'zh-HK': this.defaultRule,
+    'zh-TW': this.defaultRule,
+    'zu': this.hiRule
   };
 
-  public getPluralCase(local: string): PluralCase {
-    return this.pluralRules[local]?.bind(this)() ?? 'other';
+  public getPluralCase(locale: string): PluralCase {
+    const match = locale != null ? cultureRegex.exec(locale) : null;
+    if (match != null) {
+      const fn = this.pluralRules[match.input] ?? this.pluralRules[lodash.compact([match[1], match[2]]).join('-')] ?? this.pluralRules[match[1]];
+      if (fn != null) {
+        return fn.bind(this)() ?? this.defaultRule() ?? 'other';
+      }
+    }
+
+    return this.defaultRule() ?? 'other';
   }
 }
 

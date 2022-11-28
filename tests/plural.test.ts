@@ -156,3 +156,43 @@ test('Locale message', function () {
   expect('money'.plural(4000000)).toEqual('You have many 4000000 dollars');
   expect('money'.plural(5)).toEqual('You have other 5 dollars');
 });
+
+test('Locale french message', function () {
+  installEasyI18n();
+
+  setEasyI18nMessages({
+    'money': {
+      'zero': 'You not have money',
+      'one': 'You have {} dollar',
+      'few': 'You have few {} dollars',
+      'many': 'You have many {} dollars',
+      'other': 'You have other {} dollars'
+    }
+  }, 'fr-FR-Toto');
+
+  expect('money'.plural(0)).toEqual('You not have money');
+  expect('money'.plural(1.5)).toEqual('You have other 1.5 dollars');
+  expect('money'.plural(3)).toEqual('You have other 3 dollars');
+  expect('money'.plural(4000000)).toEqual('You have other 4000000 dollars');
+  expect('money'.plural(5)).toEqual('You have other 5 dollars');
+});
+
+test('Locale not exist message', function () {
+  installEasyI18n();
+
+  setEasyI18nMessages({
+    'money': {
+      'zero': 'You not have money',
+      'one': 'You have {} dollar',
+      'few': 'You have few {} dollars',
+      'many': 'You have many {} dollars',
+      'other': 'You have other {} dollars'
+    }
+  }, 'to-TO');
+
+  expect('money'.plural(0)).toEqual('You not have money');
+  expect('money'.plural(1.5)).toEqual('You have other 1.5 dollars');
+  expect('money'.plural(3)).toEqual('You have other 3 dollars');
+  expect('money'.plural(4000000)).toEqual('You have other 4000000 dollars');
+  expect('money'.plural(5)).toEqual('You have other 5 dollars');
+});
