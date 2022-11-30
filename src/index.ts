@@ -1,6 +1,6 @@
 import { PluralOptions, TrOptions, EasyI18nOptions, EasyI18n, EasyI18nMessages } from './easy-i18n';
 
-export { PluralCase, EasyI18nOptions, TrOptions, PluralOptions } from './easy-i18n';
+export { PluralCase, EasyI18nOptions, TrOptions, PluralOptions, EasyI18nMessages } from './easy-i18n';
 
 declare global {
   interface String {

@@ -1,7 +1,7 @@
 {
   "name": "easy-i18n-js",
-  "version": "1.0.3",
-  "description": "",
+  "version": "1.0.4",
+  "description": "A simplify use i18n",
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
