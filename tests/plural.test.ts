@@ -14,7 +14,8 @@ test('Simple message', function () {
     }
   });
 
-  expect('welcome'.plural(0)).toEqual('welcome');
+  expect('welcome'.plural(0)).toEqual('Hello world');
+  expect('welcome2'.plural(0)).toEqual('welcome2');
   expect('money'.plural(0)).toEqual('You not have money');
   expect('money'.plural(1)).toEqual('You have 1 dollar');
   expect('money'.plural(1.5)).toEqual('You have other 1.5 dollars');
@@ -36,7 +37,7 @@ test('Simple gender message', function () {
     }
   });
 
-  expect('welcome'.plural(0, {gender: 'male'})).toEqual('welcome');
+  expect('welcome'.plural(0, {gender: 'male'})).toEqual('Hello world');
   expect('money'.plural(0, {gender: 'female'})).toEqual('She not have money');
   expect('money'.plural(1, {gender: 'other'})).toEqual('You have 1 dollar');
   expect('money'.plural(2, {gender: 'male'})).toEqual('You have few 2 dollars');

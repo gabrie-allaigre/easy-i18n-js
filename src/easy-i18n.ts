@@ -132,7 +132,7 @@ export class EasyI18n {
     const tag = `${key}.${subKey}`;
     const res = this.resolveGender(tag, gender, namespace);
     if (res == null) {
-      return this.resolveGender(`${key}.other`, gender, namespace) ?? key;
+      return this.resolveGender(`${key}.other`, gender, namespace) ?? this.resolveGender(key, gender, namespace) ?? key;
     }
     return res ?? key;
   }
