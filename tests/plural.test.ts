@@ -196,3 +196,24 @@ test('Locale not exist message', function () {
   expect('money'.plural(4000000)).toEqual('You have other 4000000 dollars');
   expect('money'.plural(5)).toEqual('You have other 5 dollars');
 });
+
+test('Namespace message', function () {
+  installEasyI18n();
+
+  setEasyI18nMessages({
+    'common': {
+      'money': {
+        'zero': 'You not have money',
+        'one': 'You have {} dollar',
+        'few': 'You have few {} dollars',
+        'many': 'You have many {} dollars',
+        'other': 'You have other {} dollars'
+      }
+    }
+  });
+
+  expect('money'.plural(0)).toEqual('money');
+  expect('money'.plural(1.5, { namespace: 'common' })).toEqual('You have other 1.5 dollars');
+  expect('money'.plural(3, { namespace: 'notfound' })).toEqual('money');
+  expect('money'.plural(50000, { namespace: 'common' })).toEqual('You have other 50000 dollars');
+});
