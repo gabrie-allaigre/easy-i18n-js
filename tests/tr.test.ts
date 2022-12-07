@@ -151,3 +151,20 @@ test('Namespace message', function () {
   expect('accept'.tr({ namespace: 'notfound' })).toEqual('accept');
   expect('accept'.tr({ namespace: 'common' })).toEqual('accepter');
 });
+
+test('Simple message with key', function () {
+  installEasyI18n();
+
+  setEasyI18nMessages({
+    'welcome': 'Hello world',
+    'Complexe Key': 'Key is complexe',
+    'common': {
+      'yes': 'Yes'
+    }
+  });
+
+  expect('welcome'.tr()).toEqual('Hello world');
+  expect('welcome2'.tr()).toEqual('welcome2');
+  expect('welcome2'.tr({ key: 'welcome' })).toEqual('Hello world');
+  expect('welcome2'.tr({ key: 'notexist' })).toEqual('welcome2');
+});

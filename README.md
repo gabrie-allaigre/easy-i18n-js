@@ -85,6 +85,7 @@ tr('welcome') // Hello world
 |-----------|----------------------------------------------------|------------------------------------|
 | args      | `string[]`                                         | `['Gabriel', '20']`                |
 | namedArgs | `{ [key: string]: string; } }`                     | `{ name : 'Gabriel', age : '20' }` |
+| key       | `string`                                           | `'welcome'`                        |
 | namespace | `string`                                           | `'common'`                         |
 | gender    | <code>'male' &#124; 'female' &#124; 'other'</code> | `gender: 'other'`                  |
 
@@ -159,6 +160,7 @@ You can use extension methods of [String], you can also use plural() as a static
 |-------------------|----------------------------------------------------|------------------------------------|
 | args              | `string[]`                                         | `['Gabriel', '20']`                |
 | namedArgs         | `{ [key: string]: string; } }`                     | `{ name : 'Gabriel', age : '20' }` |
+| key               | `string`                                           | `'welcome'`                        |
 | namespace         | `string`                                           | `'common'`                         |
 | name              | `string`                                           | `money`                            |
 | numberFormatterFn | `(value: number) => string`                        | `(value) => value.Precision(3)`    |

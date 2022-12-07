@@ -17,6 +17,7 @@ export type EasyI18nMessages = { [key: string]: string | EasyI18nMessages; };
 type Arg = string;
 
 type OptionsBase = {
+  key?: string;
   gender?: 'male' | 'female' | 'other';
   args?: Arg[];
   namedArgs?: Record<string, Arg>;
@@ -60,12 +61,13 @@ export class EasyI18n {
   }
 
   public tr(key: string, options?: TrOptions): string {
-    const v = this.resolveGender(key, options?.gender, options?.namespace) ?? key;
+    const k = options?.key ?? key;
+    const v = this.resolveGender(k, options?.gender, options?.namespace) ?? key;
 
     let res: string;
     if (!lodash.isString(v)) {
       if (this.options?.logging ?? true) {
-        console.warn(`Resource is not a String ${key}`);
+        console.warn(`Resource is not a String ${k}`);
       }
       res = key;
     } else {
@@ -80,9 +82,10 @@ export class EasyI18n {
   }
 
   public plural(key: string, value: number, options?: PluralOptions): string {
+    const k = options?.key ?? key;
     const pluralCase = this.pluralCase(value);
 
-    const v = this.resolvePlural(key, pluralCase, options?.gender, options?.namespace) ?? key;
+    const v = this.resolvePlural(k, pluralCase, options?.gender, options?.namespace) ?? key;
 
     let res: string;
     if (!lodash.isString(v)) {
@@ -132,9 +135,9 @@ export class EasyI18n {
     const tag = `${key}.${subKey}`;
     const res = this.resolveGender(tag, gender, namespace);
     if (res == null) {
-      return this.resolveGender(`${key}.other`, gender, namespace) ?? this.resolveGender(key, gender, namespace) ?? key;
+      return this.resolveGender(`${key}.other`, gender, namespace) ?? this.resolveGender(key, gender, namespace);
     }
-    return res ?? key;
+    return res;
   }
 
   private resolve(key: string, namespace: string | undefined): string | EasyI18nMessages | undefined {

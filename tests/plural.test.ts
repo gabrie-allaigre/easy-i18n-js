@@ -37,15 +37,15 @@ test('Simple gender message', function () {
     }
   });
 
-  expect('welcome'.plural(0, {gender: 'male'})).toEqual('Hello world');
-  expect('money'.plural(0, {gender: 'female'})).toEqual('She not have money');
-  expect('money'.plural(1, {gender: 'other'})).toEqual('You have 1 dollar');
-  expect('money'.plural(2, {gender: 'male'})).toEqual('You have few 2 dollars');
-  expect('money'.plural(1.5, {gender: 'male'})).toEqual('He have other 1.5 dollars');
-  expect('money'.plural(2, {gender: 'female'})).toEqual('You have few 2 dollars');
-  expect('money'.plural(10, {gender: 'male'})).toEqual('He have other 10 dollars');
+  expect('welcome'.plural(0, { gender: 'male' })).toEqual('Hello world');
+  expect('money'.plural(0, { gender: 'female' })).toEqual('She not have money');
+  expect('money'.plural(1, { gender: 'other' })).toEqual('You have 1 dollar');
+  expect('money'.plural(2, { gender: 'male' })).toEqual('You have few 2 dollars');
+  expect('money'.plural(1.5, { gender: 'male' })).toEqual('He have other 1.5 dollars');
+  expect('money'.plural(2, { gender: 'female' })).toEqual('You have few 2 dollars');
+  expect('money'.plural(10, { gender: 'male' })).toEqual('He have other 10 dollars');
   expect('money'.plural(10)).toEqual('money');
-  expect(plural('money', 0, {gender: 'female'})).toEqual('She not have money');
+  expect(plural('money', 0, { gender: 'female' })).toEqual('She not have money');
 });
 
 test('Formatter message', function () {
@@ -217,4 +217,26 @@ test('Namespace message', function () {
   expect('money'.plural(1.5, { namespace: 'common' })).toEqual('You have other 1.5 dollars');
   expect('money'.plural(3, { namespace: 'notfound' })).toEqual('money');
   expect('money'.plural(50000, { namespace: 'common' })).toEqual('You have other 50000 dollars');
+});
+
+test('Simple message with key', function () {
+  installEasyI18n();
+
+  setEasyI18nMessages({
+    'welcome': 'Hello world',
+    'money': {
+      'zero': 'You not have money',
+      'one': 'You have {} dollar',
+      'many': 'You have many {} dollars',
+      'other': 'You have other {} dollars'
+    }
+  });
+
+  expect('welcome'.plural(0)).toEqual('Hello world');
+  expect('welcome2'.plural(0, { key: 'welcome' })).toEqual('Hello world');
+  expect('welcome2'.plural(0, { key: 'notexist' })).toEqual('welcome2');
+  expect('You have {} dollar(s)'.plural(0)).toEqual('You have 0 dollar(s)');
+  expect('You have {} dollar(s)'.plural(10)).toEqual('You have 10 dollar(s)');
+  expect('You have {} dollar(s)'.plural(0, { key: 'money' })).toEqual('You not have money');
+  expect('You have {} dollar(s)'.plural(10, { key: 'money' })).toEqual('You have other 10 dollars');
 });
