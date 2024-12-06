@@ -240,3 +240,24 @@ test('Simple message with key', function () {
   expect('You have {} dollar(s)'.plural(0, { key: 'money' })).toEqual('You not have money');
   expect('You have {} dollar(s)'.plural(10, { key: 'money' })).toEqual('You have other 10 dollars');
 });
+
+test('Simple message with key not found', function () {
+  installEasyI18n();
+
+  setEasyI18nMessages({
+    'welcome': 'Hello world',
+    'money': {
+      'zero': 'You not have money',
+      'one': 'You have {} dollar',
+      'many': 'You have many {} dollars',
+      'other': 'You have other {} dollars'
+    }
+  });
+
+  expect('blablabla'.plural(0, {
+    notFound: 'Not found key blablabla'
+  })).toEqual('Not found key blablabla');
+  expect('blablabla'.plural(10, {
+    notFound: 'Not found key {}'
+  })).toEqual('Not found key 10');
+});

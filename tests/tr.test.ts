@@ -168,3 +168,23 @@ test('Simple message with key', function () {
   expect('welcome2'.tr({ key: 'welcome' })).toEqual('Hello world');
   expect('welcome2'.tr({ key: 'notexist' })).toEqual('welcome2');
 });
+
+test('Simple message with key not found', function () {
+  installEasyI18n();
+
+  setEasyI18nMessages({
+    'welcome': 'Hello world',
+    'Complexe Key': 'Key is complexe',
+    'common': {
+      'yes': 'Yes'
+    }
+  });
+
+  expect('blablabla'.tr({
+    notFound: 'Not found key blablabla'
+  })).toEqual('Not found key blablabla');
+  expect('blablabla'.tr({
+    args: ['test'],
+    notFound: 'Not found key {}'
+  })).toEqual('Not found key test');
+});
