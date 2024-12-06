@@ -32,12 +32,12 @@ installEasyI18n({ ... }); // With options
 
 #### Options arguments
 
-| Name              | type                                                                                   | example                         | description              |
-|-------------------|----------------------------------------------------------------------------------------|---------------------------------|--------------------------|
-| logging           | `boolean`                                                                              | `true`                          | Show logging             |
+| Name              | type                                                                                    | example                         | description              |
+|-------------------|-----------------------------------------------------------------------------------------|---------------------------------|--------------------------|
+| logging           | `boolean`                                                                               | `true`                          | Show logging             |
 | pluralRuleFn      | <code>'zero' &#124; 'one' &#124; 'two' &#124; 'few' &#124; 'many' &#124; 'other'</code> | `(value) => 'other'`            | Custom plural            |
-| numberFormatterFn | `(value: number) => string`                                                            | `(value) => value.Precision(3)` | Global formatter         |
-| modifiers         | <code>{ [key: string]: (val: string &#124; undefined) => string &#124; undefined } }   |                                 | Custom modifier for link |
+| numberFormatterFn | `(value: number) => string`                                                             | `(value) => value.Precision(3)` | Global formatter         |
+| modifiers         | <code>{ [key: string]: (val: string &#124; undefined) => string &#124; undefined } }    |                                 | Custom modifier for link |
 
 ### Static setEasyI18nMessages
 
@@ -88,6 +88,7 @@ tr('welcome') // Hello world
 | key       | `string`                                           | `'welcome'`                        |
 | namespace | `string`                                           | `'common'`                         |
 | gender    | <code>'male' &#124; 'female' &#124; 'other'</code> | `gender: 'other'`                  |
+| notFound  | `string`                                           | `'Key not found'`                  |
 
 #### Examples
 
@@ -148,6 +149,11 @@ setEasyI18nMessages({
 'welcome_gender'.tr({ namedArgs: { name: 'Sandra and Gabriel' }, gender: 'other' }); // Welcome Sandra and Gabriel
 ```
 
+```typescript
+// Key not found, use custom message
+'Hello world'.tr({ notFound: 'Key not found' }) // Key not found
+```
+
 ### Translate plural()
 
 You can translate with pluralization. To insert a number in the translated string, use {}.
@@ -165,6 +171,7 @@ You can use extension methods of [String], you can also use plural() as a static
 | name              | `string`                                           | `money`                            |
 | numberFormatterFn | `(value: number) => string`                        | `(value) => value.Precision(3)`    |
 | gender            | <code>'male' &#124; 'female' &#124; 'other'</code> | `gender: 'other'`                  |
+| notFound          | `string`                                           | `'Key not found'`                  |
 
 ```typescript
 installEasyI18n();
@@ -225,6 +232,11 @@ setEasyI18nMessages({
 'money'.plural(1, { gender: 'other' }) // You have 1 dollar
 'money'.plural(2, { gender: 'male' }) // You have few 2 dollars
 'money'.plural(1.5, { gender: 'male' }) // He have other 1.5 dollars
+```
+
+```typescript
+// Key not found, use custom message
+'money'.plural(10, { notFound: 'Key not found but money {}' }) // Key not found but money 10
 ```
 
 #### Formatter
@@ -324,11 +336,11 @@ messages. Linked messages can be formatted with modifier @.modifier:key
 
 The below modifiers are available currently.
 
-| modifier    | description                                           | example           |
-|-------------|-------------------------------------------------------|-------------------|
-| lower       | Lowercase all characters in the linked message.       | @:.lower:key      |
-| upper       | Uppercase all characters in the linked message        | @:.upper:key      |
-| capitalize  | Capitalize the first character in the linked message. | @:.capitalize:key |
+| modifier   | description                                           | example           |
+|------------|-------------------------------------------------------|-------------------|
+| lower      | Lowercase all characters in the linked message.       | @:.lower:key      |
+| upper      | Uppercase all characters in the linked message        | @:.upper:key      |
+| capitalize | Capitalize the first character in the linked message. | @:.capitalize:key |
 
 ```typescript
 installEasyI18n({

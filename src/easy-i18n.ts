@@ -22,6 +22,7 @@ type OptionsBase = {
   args?: Arg[];
   namedArgs?: Record<string, Arg>;
   namespace?: string;
+  notFound?: string;
 }
 
 export type TrOptions = OptionsBase & {};
@@ -62,7 +63,7 @@ export class EasyI18n {
 
   public tr(key: string, options?: TrOptions): string {
     const k = options?.key ?? key;
-    const v = this.resolveGender(k, options?.gender, options?.namespace) ?? key;
+    const v = this.resolveGender(k, options?.gender, options?.namespace, options?.notFound) ?? key;
 
     let res: string;
     if (!lodash.isString(v)) {
@@ -85,7 +86,7 @@ export class EasyI18n {
     const k = options?.key ?? key;
     const pluralCase = this.pluralCase(value);
 
-    const v = this.resolvePlural(k, pluralCase, options?.gender, options?.namespace) ?? key;
+    const v = this.resolvePlural(k, pluralCase, options?.gender, options?.namespace, options?.notFound) ?? key;
 
     let res: string;
     if (!lodash.isString(v)) {
@@ -112,35 +113,35 @@ export class EasyI18n {
   }
 
   private resolveGender(key: string, gender: 'male' | 'female' | 'other' | undefined,
-                        namespace: string | undefined): string | EasyI18nMessages | undefined {
+                        namespace: string | undefined, notFound: string | undefined): string | EasyI18nMessages | undefined {
     if (gender) {
-      const v = this.gender(key, gender, namespace);
+      const v = this.gender(key, gender, namespace, notFound);
       if (v != null) {
         return v;
       }
     }
-    return this.resolve(key, namespace);
+    return this.resolve(key, namespace, notFound);
   }
 
-  private gender(key: string, gender: 'male' | 'female' | 'other', namespace: string | undefined): string | EasyI18nMessages | undefined {
-    return this.resolve(`${key}.${gender}`, namespace);
+  private gender(key: string, gender: 'male' | 'female' | 'other', namespace: string | undefined, notFound: string | undefined): string | EasyI18nMessages | undefined {
+    return this.resolve(`${key}.${gender}`, namespace, notFound);
   }
 
   private resolvePlural(key: string, subKey: PluralCase, gender: 'male' | 'female' | 'other' | undefined,
-                        namespace: string | undefined): string | EasyI18nMessages | undefined {
+                        namespace: string | undefined, notFound: string | undefined): string | EasyI18nMessages | undefined {
     if (subKey === 'other') {
-      return this.resolveGender(`${key}.other`, gender, namespace);
+      return this.resolveGender(`${key}.other`, gender, namespace, notFound);
     }
 
     const tag = `${key}.${subKey}`;
-    const res = this.resolveGender(tag, gender, namespace);
+    const res = this.resolveGender(tag, gender, namespace, notFound);
     if (res == null) {
-      return this.resolveGender(`${key}.other`, gender, namespace) ?? this.resolveGender(key, gender, namespace);
+      return this.resolveGender(`${key}.other`, gender, namespace, notFound) ?? this.resolveGender(key, gender, namespace, notFound);
     }
     return res;
   }
 
-  private resolve(key: string, namespace: string | undefined): string | EasyI18nMessages | undefined {
+  private resolve(key: string, namespace: string | undefined, notFound: string | undefined): string | EasyI18nMessages | undefined {
     let k = key;
     if (namespace) {
       k = `${namespace}.${key}`;
@@ -150,7 +151,7 @@ export class EasyI18n {
       if (this.options?.logging ?? true) {
         console.warn(`Localization key ${key} not found`);
       }
-      return undefined;
+      return notFound;
     }
     return resource;
   }
@@ -170,7 +171,7 @@ export class EasyI18n {
 
         const linkPlaceholder = link.replaceAll(linkPrefix, '').replaceAll(bracketsMatcher, '');
 
-        const v = this.resolve(linkPlaceholder, undefined) ?? linkPlaceholder;
+        const v = this.resolve(linkPlaceholder, undefined, undefined) ?? linkPlaceholder;
         if (!lodash.isString(v)) {
           if (this.options?.logging ?? true) {
             console.warn(`Resource is not a String ${linkPlaceholder}`);
