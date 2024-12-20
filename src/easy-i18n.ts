@@ -61,6 +61,18 @@ export class EasyI18n {
     this.locale = locale;
   }
 
+  public getMessages(): EasyI18nMessages {
+    return this.messages;
+  }
+
+  public getLocale(): string | undefined {
+    return this.locale;
+  }
+
+  public getPlainMessage(key: string): string | EasyI18nMessages | undefined {
+    return lodash.get(this.messages, key);
+  }
+
   public tr(key: string, options?: TrOptions): string {
     const k = options?.key ?? key;
     const v = this.resolveGender(k, options?.gender, options?.namespace, options?.notFound) ?? key;
