@@ -1,6 +1,6 @@
 {
   "name": "easy-i18n-js",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "A simplify use i18n",
   "main": "lib/index.js",
   "scripts": {

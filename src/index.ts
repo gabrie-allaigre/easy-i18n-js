@@ -8,7 +8,7 @@ declare global {
 
     plural(value: number, options?: PluralOptions): string;
 
-    plain(key: string): String | string | EasyI18nMessages | undefined;
+    plain(): String | string | EasyI18nMessages | undefined;
   }
 
   interface Window {
