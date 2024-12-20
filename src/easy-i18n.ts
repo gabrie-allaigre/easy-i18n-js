@@ -69,7 +69,7 @@ export class EasyI18n {
     return this.locale;
   }
 
-  public getPlainMessage(key: string): string | EasyI18nMessages | undefined {
+  public plain(key: string): string | EasyI18nMessages | undefined {
     return lodash.get(this.messages, key);
   }
 

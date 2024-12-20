@@ -1,4 +1,4 @@
-import { PluralOptions, TrOptions, EasyI18nOptions, EasyI18n, EasyI18nMessages } from './easy-i18n';
+import { EasyI18n, EasyI18nMessages, EasyI18nOptions, PluralOptions, TrOptions } from './easy-i18n';
 
 export { PluralCase, EasyI18nOptions, TrOptions, PluralOptions, EasyI18nMessages } from './easy-i18n';
 
@@ -7,6 +7,8 @@ declare global {
     tr(options?: TrOptions): string;
 
     plural(value: number, options?: PluralOptions): string;
+
+    plain(key: string): String | string | EasyI18nMessages | undefined;
   }
 
   interface Window {
@@ -14,6 +16,8 @@ declare global {
       tr(key: string, options?: TrOptions): string;
 
       plural(key: string, value: number, options?: PluralOptions): string;
+
+      plain(key: string): string | EasyI18nMessages | undefined;
     };
   }
 }
@@ -29,6 +33,10 @@ export function installEasyI18n(options?: EasyI18nOptions): void {
     String.prototype.plural = function (value: number, options?: PluralOptions): string {
       return window.easyI18n?.plural(this as string, value, options) ?? this;
     };
+
+    String.prototype.plain = function (): String | string | EasyI18nMessages | undefined {
+      return window.easyI18n?.plain(this as string) ?? this;
+    };
   }
 }
 
@@ -43,14 +51,17 @@ export function setEasyI18nMessages(messages: EasyI18nMessages, locale?: string)
   }
 }
 
-export function tr(text: string, options?: TrOptions): string {
-  return window.easyI18n?.tr(text, options) ?? text;
+export function tr(key: string, options?: TrOptions): string {
+  return window.easyI18n?.tr(key, options) ?? key;
 }
 
-export function plural(text: string, value: number, options?: PluralOptions): string {
-  return window.easyI18n?.plural(text, value, options) ?? text;
+export function plural(key: string, value: number, options?: PluralOptions): string {
+  return window.easyI18n?.plural(key, value, options) ?? key;
 }
 
+export function plain(key: string): string | EasyI18nMessages | undefined {
+  return window.easyI18n?.plain(key) ?? key;
+}
 
 
 

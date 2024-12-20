@@ -323,6 +323,25 @@ setEasyI18nMessages({
 'money'.plural(31024) // You have many 31024 dollars
 ```
 
+### Translate plain()
+
+Main function for get translate object your language keys
+
+You can use extension methods of [String], you can also use plain() as a static function.
+
+```typescript
+installEasyI18n();
+
+setEasyI18nMessages({
+  'common': {
+    'welcome': 'Welcome everyone'
+  }
+});
+
+'common'.plain() // { 'welcome': 'Welcome everyone' }
+plain('common') // { 'welcome': 'Welcome everyone' }
+```
+
 ### Link and modifiers
 
 If there's a translation key that will always have the same concrete text as another one you can just link to it. To link to another
